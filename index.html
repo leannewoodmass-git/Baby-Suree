@@ -98,7 +98,7 @@ const CATS=['Safe Space & Play','Soft Everyday Essentials','Care & Changing','Sl
 const CICONS={'Safe Space & Play':'🐻','Soft Everyday Essentials':'🫧','Care & Changing':'🪴','Sleep Essentials':'🌙','Something Special':'✨'};
 
 const DEFAULTS={
-  event:{parents:'Shirin & Mads',baby:'Baby Suree',date:'Sunday, April 26',time:'12:00 PM',location:'Restaurant TBA',address:'Details coming very soon!',note:"She's already so happy you're coming 💕 This isn't a surprise — Shirin knows all about it! We'll have a coastal color theme for outfits (perfect for photos!). Restaurant location coming soon.",dresscode:'Coastal palette · sandy beige, coral & teal'},
+  event:{parents:'Shirin & Mads',baby:'Baby Suree',date:'Sunday, April 26',year:'2026',time:'12:00 PM',location:'Restaurant TBA',address:'Details coming very soon!',note:"She's already so happy you're coming 💕 This isn't a surprise — Shirin knows all about it! We'll have a coastal color theme for outfits (perfect for photos!). Restaurant location coming soon.",dresscode:'Coastal palette · sandy beige, coral & teal'},
   rsvps:[],
   registry:[
     {id:'r1',category:'Safe Space & Play',name:'Playpen / Baby Play Yard',note:'Neutral, minimal design',maxQty:1,claims:[]},
@@ -193,6 +193,10 @@ function render(){
         <div class="dcard"><div class="dcard-icon">👗</div><div class="dcard-lbl">Outfit Theme</div><div class="dcard-val" style="font-size:13px">${x(e.dresscode)}</div></div>
       </div>
       ${e.note?`<div class="note-wave"><p>${x(e.note)}</p></div>`:''}
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:1rem;flex-wrap:wrap">
+        <button class="btn-ghost" onclick="addToCalendar('google')" style="font-size:12px;padding:7px 16px">📅 Google Calendar</button>
+        <button class="btn-ghost" onclick="addToCalendar('apple')" style="font-size:12px;padding:7px 16px">🍎 Apple / iPhone</button>
+      </div>
     </div>
     <div style="height:.5px;background:linear-gradient(90deg,transparent,var(--teal-m),transparent);margin:0 1rem"></div>
     <div class="section">
@@ -288,6 +292,7 @@ function renderModal(){
       inner=`<label>Parents</label><input id="ep" value="${x(e.parents)}">
       <label>Baby name</label><input id="eb" value="${x(e.baby)}">
       <label>Date</label><input id="ed" value="${x(e.date)}">
+      <label>Year</label><input id="ey" value="${x(e.year||'2026')}">
       <label>Time</label><input id="et" value="${x(e.time)}">
       <label>Venue name</label><input id="el" value="${x(e.location)}">
       <label>Address / details</label><input id="ea" value="${x(e.address)}">
@@ -428,6 +433,7 @@ function saveEvent(){
     parents:document.getElementById('ep')?.value||data.event.parents,
     baby:document.getElementById('eb')?.value||data.event.baby,
     date:document.getElementById('ed')?.value||data.event.date,
+    year:document.getElementById('ey')?.value||data.event.year||'2026',
     time:document.getElementById('et')?.value||data.event.time,
     location:document.getElementById('el')?.value||data.event.location,
     address:document.getElementById('ea')?.value||data.event.address,
@@ -435,6 +441,37 @@ function saveEvent(){
     note:document.getElementById('en')?.value||''
   };
   save();closeModal();
+}
+function calLinks(){
+  const months={January:'01',February:'02',March:'03',April:'04',May:'05',June:'06',July:'07',August:'08',September:'09',October:'10',November:'11',December:'12'};
+  const dp=data.event.date.replace(/^[A-Za-z]+,\s*/,'').split(' ');
+  const yy=data.event.year||'2026';
+  const mm=months[dp[0]]||'04';
+  const dd=String(dp[1]).padStart(2,'0');
+  const dateStr=`${yy}${mm}${dd}`;
+  const [tp,ampm]=(data.event.time||'12:00 PM').split(' ');
+  let [h,m]=tp.split(':').map(Number);
+  if(ampm==='PM'&&h!==12)h+=12;
+  if(ampm==='AM'&&h===12)h=0;
+  const timeStr=`${String(h).padStart(2,'0')}${String(m).padStart(2,'0')}00`;
+  let eh=h+3;if(eh>=24)eh=23;
+  const endStr=`${String(eh).padStart(2,'0')}${String(m).padStart(2,'0')}00`;
+  const title=encodeURIComponent(`Baby Shower \u2014 ${data.event.baby}`);
+  const loc=encodeURIComponent(`${data.event.location}${data.event.address?', '+data.event.address:''}`);
+  const desc=encodeURIComponent(`Celebrating ${data.event.baby} with ${data.event.parents} \ud83c\udf0a`);
+  const google=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateStr}T${timeStr}/${dateStr}T${endStr}&details=${desc}&location=${loc}`;
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Baby Suree//EN','BEGIN:VEVENT',
+    `DTSTART:${dateStr}T${timeStr}`,`DTEND:${dateStr}T${endStr}`,
+    `SUMMARY:Baby Shower \u2014 ${data.event.baby}`,
+    `DESCRIPTION:Celebrating ${data.event.baby} with ${data.event.parents}`,
+    `LOCATION:${data.event.location}${data.event.address?', '+data.event.address:''}`,
+    'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  return{google,ics};
+}
+function addToCalendar(type){
+  const{google,ics}=calLinks();
+  if(type==='google'){window.open(google,'_blank');}
+  else{const blob=new Blob([ics],{type:'text/calendar'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='baby-suree-shower.ics';a.click();}
 }
 function addItem(){
   const n=(document.getElementById('rn2')?.value||'').trim();
