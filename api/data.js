@@ -1,17 +1,22 @@
-import { kv } from '@vercel/kv';
+const { kv } = require('@vercel/kv');
 
 const KEY = 'baby-suree-pub-v1';
 
-export default async function handler(req, res) {
-  if (req.method === 'GET') {
-    const data = await kv.get(KEY);
-    return res.status(200).json(data ?? null);
-  }
+module.exports = async function handler(req, res) {
+  try {
+    if (req.method === 'GET') {
+      const data = await kv.get(KEY);
+      return res.status(200).json(data ?? null);
+    }
 
-  if (req.method === 'POST') {
-    await kv.set(KEY, req.body);
-    return res.status(200).json({ ok: true });
-  }
+    if (req.method === 'POST') {
+      await kv.set(KEY, req.body);
+      return res.status(200).json({ ok: true });
+    }
 
-  return res.status(405).end();
-}
+    return res.status(405).end();
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: err.message });
+  }
+};
