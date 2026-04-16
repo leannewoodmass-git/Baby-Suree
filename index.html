@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Suree – Baby Shower</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sand:#FAF0E4;--coral:#E8816A;--coral-l:#FADED8;--coral-m:#F4B8A8;
+  --teal:#48BFB0;--teal-d:#2A9090;--teal-l:#E0F5F3;--teal-m:#9ADEDB;
+  --brown:#4A3028;--muted:#9A7060;
+  --bc:rgba(232,129,106,.22);--bt:rgba(72,191,176,.22);
+  --ff-d:'Lora',Georgia,serif;--ff-b:'Jost','Helvetica Neue',sans-serif;
+}
+html,body{background:var(--sand);color:var(--brown);font-family:var(--ff-b);font-weight:300;min-height:100vh}
+.page{max-width:700px;margin:0 auto}
+.hero-wrap{position:relative;overflow:hidden;text-align:center}
+.hero-inner{padding:1.5rem 1.5rem 0;position:relative}
+.eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--coral);margin-bottom:.75rem}
+.hero-title{font-family:var(--ff-d);font-size:clamp(48px,11vw,82px);font-weight:400;font-style:italic;line-height:1;color:var(--brown);margin-bottom:.4rem}
+.hero-sub{font-family:var(--ff-d);font-size:clamp(14px,3vw,18px);color:var(--muted);margin-bottom:.25rem}
+.hero-parents{font-family:var(--ff-d);font-size:clamp(20px,5vw,30px);font-weight:600;color:var(--teal-d);margin-bottom:1.5rem}
+.hero-divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 auto 1.25rem;max-width:200px}
+.hero-divider::before,.hero-divider::after{content:'';flex:1;height:.5px;background:var(--coral-m)}
+.hero-date-pill{display:inline-block;background:var(--coral);color:#fff;font-family:var(--ff-b);font-size:13px;letter-spacing:.08em;padding:8px 22px;border-radius:30px;margin-bottom:1.75rem}
+.sec-tag{font-size:10px;letter-spacing:.24em;text-transform:uppercase;text-align:center;margin-bottom:.4rem}
+.sec-tag.coral{color:var(--coral)}.sec-tag.teal{color:var(--teal-d)}
+.sec-title{font-family:var(--ff-d);font-size:clamp(24px,5vw,34px);font-weight:400;font-style:italic;text-align:center;margin-bottom:1.5rem;color:var(--brown)}
+.section{padding:2rem 1.5rem}
+.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:480px){.detail-grid{grid-template-columns:1fr}}
+.dcard{background:#fff;border:0.5px solid var(--bc);border-radius:14px;padding:1.1rem 1rem;text-align:center}
+.dcard-icon{font-size:18px;margin-bottom:6px}
+.dcard-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);margin-bottom:4px}
+.dcard-val{font-family:var(--ff-d);font-size:16px;font-weight:600;line-height:1.3;color:var(--brown)}
+.dcard-sub{font-size:12px;color:var(--muted);margin-top:2px;font-weight:300}
+.note-wave{background:linear-gradient(135deg,var(--teal-l) 0%,var(--coral-l) 100%);border-radius:14px;padding:1.1rem 1.4rem;margin-top:1rem;text-align:center}
+.note-wave p{font-family:var(--ff-d);font-size:16px;font-style:italic;color:var(--brown);line-height:1.65}
+.rsvp-box{background:#fff;border:0.5px solid var(--bt);border-radius:16px;padding:1.5rem}
+.frow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.frow input,.frow select{flex:1;min-width:120px;font-family:var(--ff-b);font-size:14px;font-weight:300;padding:10px 13px;border:0.5px solid var(--bc);border-radius:8px;background:var(--sand);color:var(--brown);outline:none}
+.frow input:focus,.frow select:focus{border-color:var(--teal)}
+.frow input::placeholder{color:#C4A898}
+.btn-coral{width:100%;padding:12px;font-family:var(--ff-b);font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:var(--coral);color:#fff;border:none;border-radius:8px;cursor:pointer;margin-top:4px;transition:opacity .2s}
+.btn-coral:hover{opacity:.85}
+.btn-teal{background:var(--teal);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:var(--ff-b);font-size:12px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:opacity .2s}
+.btn-teal:hover{opacity:.85}
+.btn-ghost{background:none;border:0.5px solid var(--bc);border-radius:8px;padding:8px 14px;font-family:var(--ff-b);font-size:12px;cursor:pointer;color:var(--brown)}
+.btn-ghost:hover{background:var(--coral-l)}
+.rsvp-chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:1rem}
+.rsvp-chip{font-size:13px;padding:5px 14px;border-radius:20px;background:var(--teal-l);border:0.5px solid var(--bt);color:var(--teal-d)}
+.rsvp-chip.no{background:var(--coral-l);border-color:var(--bc);color:var(--coral)}
+.rsvp-count{text-align:center;font-size:13px;color:var(--muted);margin-bottom:.6rem}
+.reg-cat-hd{display:flex;align-items:center;gap:10px;margin:1.25rem 0 .6rem}
+.reg-cat-hd span{font-family:var(--ff-d);font-size:16px;font-weight:600;color:var(--teal-d);white-space:nowrap}
+.reg-cat-hd::before,.reg-cat-hd::after{content:'';flex:1;height:.5px;background:var(--bt)}
+.reg-note{text-align:center;font-size:13px;color:var(--muted);font-style:italic;margin-bottom:1.25rem;font-family:var(--ff-d)}
+.reg-list{display:flex;flex-direction:column;gap:7px}
+.reg-item{background:#fff;border:0.5px solid var(--bc);border-radius:12px;padding:11px 15px}
+.reg-item.full{background:var(--sand);opacity:.7}
+.reg-top{display:flex;align-items:center;gap:11px}
+.reg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:2px}
+.reg-dot.free{background:var(--teal)}.reg-dot.partial{background:#F0B060}.reg-dot.full{background:var(--coral)}
+.reg-item-name{font-family:var(--ff-d);font-size:16px;font-weight:600;color:var(--brown)}
+.reg-item-note{font-size:12px;color:var(--muted);margin-top:1px;font-weight:300}
+.reg-qty{font-size:12px;color:var(--teal-d);margin-top:2px;font-weight:400}
+.reg-claimers{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;padding-top:8px;border-top:.5px solid var(--bt)}
+.claimer-tag{background:var(--teal-l);border:0.5px solid var(--bt);border-radius:12px;font-size:12px;color:var(--teal-d);padding:3px 10px}
+.footer-inner{background:var(--teal-d);padding:1.5rem;text-align:center}
+.footer-inner p{color:rgba(255,255,255,.75);font-size:13px;margin-bottom:.4rem;font-weight:300}
+.admin-lnk{font-size:11px;color:rgba(255,255,255,.4);cursor:pointer;text-decoration:underline;text-decoration-style:dotted}
+.overlay{position:fixed;inset:0;background:rgba(74,48,40,.45);display:flex;align-items:center;justify-content:center;z-index:100;padding:1rem}
+.modal{background:#fff;border-radius:16px;padding:1.5rem;width:100%;max-width:440px;max-height:84vh;overflow-y:auto}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.modal-head h3{font-family:var(--ff-d);font-size:22px;font-weight:600;font-style:italic;color:var(--brown)}
+.m-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--muted);padding:4px 8px}
+.modal label{display:block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);margin:10px 0 3px}
+.modal input,.modal select,.modal textarea{width:100%;font-family:var(--ff-b);font-size:14px;font-weight:300;padding:9px 12px;border:0.5px solid var(--bc);border-radius:8px;background:var(--sand);color:var(--brown);outline:none}
+.modal textarea{resize:vertical;min-height:65px}
+.mrow{display:flex;gap:8px;flex-wrap:wrap}
+.mrow input,.mrow select{flex:1;min-width:100px;font-family:var(--ff-b);font-size:13px;padding:8px 11px;border:0.5px solid var(--bc);border-radius:8px;background:var(--sand);color:var(--brown);outline:none}
+.btns{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem}
+.tabs{display:flex;border:0.5px solid var(--bc);border-radius:8px;overflow:hidden;margin-bottom:1rem}
+.t{flex:1;padding:8px 4px;font-size:12px;text-align:center;background:none;border:none;cursor:pointer;color:var(--muted);font-family:var(--ff-b)}
+.t.on{background:var(--teal);color:#fff}
+.arow{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:.5px solid var(--bt);font-size:13px}
+.tag-y{font-size:11px;color:var(--teal-d);background:var(--teal-l);padding:2px 8px;border-radius:10px}
+.tag-n{font-size:11px;color:var(--coral);background:var(--coral-l);padding:2px 8px;border-radius:10px}
+</style>
+</head>
+<body>
+<div class="page" id="app"><div style="text-align:center;padding:4rem;color:#C4A898;font-size:14px">Loading...</div></div>
+<script>
+const KEY='baby-suree-pub-v1';
+const CATS=['Safe Space & Play','Soft Everyday Essentials','Care & Changing','Sleep Essentials','Something Special'];
+const CICONS={'Safe Space & Play':'🐻','Soft Everyday Essentials':'🫧','Care & Changing':'🪴','Sleep Essentials':'🌙','Something Special':'✨'};
+
+const DEFAULTS={
+  event:{parents:'Shirin & Mads',baby:'Baby Suree',date:'Sunday, April 26',time:'12:00 PM',location:'Restaurant TBA',address:'Details coming very soon!',note:"She's already so happy you're coming 💕 This isn't a surprise — Shirin knows all about it! We'll have a coastal color theme for outfits (perfect for photos!). Restaurant location coming soon.",dresscode:'Coastal palette · sandy beige, coral & teal'},
+  rsvps:[],
+  registry:[
+    {id:'r1',category:'Safe Space & Play',name:'Playpen / Baby Play Yard',note:'Neutral, minimal design',maxQty:1,claims:[]},
+    {id:'r2',category:'Safe Space & Play',name:'Baby Books',note:'TH, EN & GER languages welcome',maxQty:0,claims:[]},
+    {id:'r3',category:'Soft Everyday Essentials',name:'Muslin Cloths / Swaddles',note:'Neutral ocean tones',maxQty:0,claims:[]},
+    {id:'r4',category:'Soft Everyday Essentials',name:'Organic Baby Towels',note:'Neutral ocean tones · up to 3',maxQty:3,claims:[]},
+    {id:'r5',category:'Soft Everyday Essentials',name:'Fitted Sheets',note:'Neutral ocean tones · up to 2',maxQty:2,claims:[]},
+    {id:'r6',category:'Soft Everyday Essentials',name:'Clothes & Accessories',note:'Neutral ocean tones',maxQty:0,claims:[]},
+    {id:'r7',category:'Care & Changing',name:'Diaper Pail',note:'Minimal design · white / beige / sand',maxQty:1,claims:[]},
+    {id:'r8',category:'Care & Changing',name:'Changing Pad',note:'Minimal design · white / beige / sand',maxQty:1,claims:[]},
+    {id:'r9',category:'Care & Changing',name:'Diaper Bag',note:'Minimal design · white / beige / sand',maxQty:1,claims:[]},
+    {id:'r10',category:'Care & Changing',name:'Baby Bathtub',note:'Minimal design · white / beige / sand',maxQty:1,claims:[]},
+    {id:'r11',category:'Sleep Essentials',name:'Baby Sleep Sacks (various sizes)',note:'Sand, sage, blush or ocean blue',maxQty:0,claims:[]},
+    {id:'r12',category:'Sleep Essentials',name:'Self-Rocking Baby Bed',note:'Sand, sage, blush or ocean blue',maxQty:1,claims:[]},
+    {id:'r13',category:'Something Special',name:'Trust Me - she MUST have THIS',note:'',maxQty:0,claims:[]}
+  ],
+  pin:'1234'
+};
+
+let data=JSON.parse(JSON.stringify(DEFAULTS));
+let modal=null,claimId=null,atab='event';
+
+async function load(){
+  try{
+    if(window.storage){
+      const r=await window.storage.get(KEY,true);
+      if(r&&r.value){const d=JSON.parse(r.value);data={...data,...d};}
+    } else {
+      const s=localStorage.getItem(KEY);
+      if(s){const d=JSON.parse(s);data={...data,...d};}
+    }
+  }catch(e){}
+  render();
+}
+async function save(){
+  try{
+    if(window.storage){await window.storage.set(KEY,JSON.stringify(data),true);}
+    else{localStorage.setItem(KEY,JSON.stringify(data));}
+  }catch(e){}
+}
+
+const x=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function wave(col,op,flip){
+  const t=flip?'transform="scale(1,-1) translate(0,-80)"':'';
+  return`<svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;display:block;height:60px"><path ${t} d="M0,40 C240,70 480,10 720,40 C960,70 1200,10 1440,40 L1440,80 L0,80 Z" fill="${col}" opacity="${op}"/><path ${t} d="M0,55 C300,30 600,70 900,50 C1100,35 1280,65 1440,45 L1440,80 L0,80 Z" fill="${col}" opacity="${op*.6}"/></svg>`;
+}
+function shells(){
+  return`<svg viewBox="0 0 700 120" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;width:100%;height:120px;pointer-events:none;opacity:.18">
+    <ellipse cx="60" cy="50" rx="28" ry="14" transform="rotate(-30 60 50)" fill="#E8816A"/>
+    <ellipse cx="30" cy="80" rx="18" ry="8" transform="rotate(-50 30 80)" fill="#48BFB0"/>
+    <ellipse cx="90" cy="25" rx="15" ry="7" transform="rotate(-15 90 25)" fill="#E8816A"/>
+    <ellipse cx="640" cy="50" rx="28" ry="14" transform="rotate(30 640 50)" fill="#48BFB0"/>
+    <ellipse cx="670" cy="80" rx="18" ry="8" transform="rotate(50 670 80)" fill="#E8816A"/>
+    <ellipse cx="610" cy="25" rx="15" ry="7" transform="rotate(15 610 25)" fill="#48BFB0"/>
+  </svg>`;
+}
+
+function isFull(i){return i.maxQty===1&&i.claims.length>=1;}
+function dotClass(i){if(!i.claims.length)return'free';if(isFull(i))return'full';return'partial';}
+function qtyLabel(i){
+  if(i.maxQty===0)return i.claims.length?`${i.claims.length} people bringing this`:'Open · anyone can bring one';
+  if(i.maxQty===1)return i.claims.length?'Claimed':'1 needed';
+  const left=i.maxQty-i.claims.length;
+  return left>0?`${i.claims.length}/${i.maxQty} claimed · ${left} still needed`:`${i.maxQty}/${i.maxQty} · fully covered`;
+}
+
+function render(){
+  const e=data.event,rs=data.rsvps,reg=data.registry;
+  const yes=rs.filter(r=>r.attending==='yes'),no=rs.filter(r=>r.attending==='no');
+  const totalPpl=yes.reduce((s,r)=>s+(r.guests||1),0);
+  const bycat=CATS.map(cat=>({cat,items:reg.filter(i=>i.category===cat)}));
+
+  document.getElementById('app').innerHTML=`
+  <div class="hero-wrap">
+    ${wave('#48BFB0',.22,false)}
+    <div class="hero-inner">
+      ${shells()}
+      <p class="eyebrow">You're invited to celebrate</p>
+      <h1 class="hero-title">${x(e.baby)}</h1>
+      <p class="hero-sub">a baby girl for</p>
+      <p class="hero-parents">${x(e.parents)}</p>
+      <div class="hero-divider">🐚</div>
+      <div class="hero-date-pill">${x(e.date)} · ${x(e.time)}</div>
+    </div>
+    ${wave('#E8816A',.18,true)}
+  </div>
+  <div style="padding:0 1rem">
+    <div class="section">
+      <p class="sec-tag coral">The Details</p>
+      <div class="detail-grid">
+        <div class="dcard"><div class="dcard-icon">🌊</div><div class="dcard-lbl">Date & Time</div><div class="dcard-val">${x(e.date)}</div><div class="dcard-sub">${x(e.time)}</div></div>
+        <div class="dcard"><div class="dcard-icon">🐠</div><div class="dcard-lbl">Location</div><div class="dcard-val">${x(e.location)}</div><div class="dcard-sub">${x(e.address)}</div></div>
+        <div class="dcard"><div class="dcard-icon">👗</div><div class="dcard-lbl">Outfit Theme</div><div class="dcard-val" style="font-size:13px">${x(e.dresscode)}</div></div>
+      </div>
+      ${e.note?`<div class="note-wave"><p>${x(e.note)}</p></div>`:''}
+    </div>
+    <div style="height:.5px;background:linear-gradient(90deg,transparent,var(--teal-m),transparent);margin:0 1rem"></div>
+    <div class="section">
+      <p class="sec-tag teal">Kindly Reply</p>
+      <p class="sec-title">RSVP</p>
+      <div class="rsvp-box">
+        <div class="frow">
+          <input type="text" id="rn" placeholder="Name" maxlength="50">
+          <select id="ra"><option value="yes">Yes, I'll be there! 🎉</option><option value="no">Sorry, can't make it</option></select>
+        </div>
+        <div class="frow">
+          <input type="number" id="rg" placeholder="No. of guests" min="1" max="10" value="1" style="max-width:160px">
+          <input type="text" id="rdiet" placeholder="Please note any dietary requirements" style="flex:3">
+        </div>
+        <button class="btn-coral" onclick="submitRsvp()">Send RSVP</button>
+        <p id="rsvp-err" style="font-size:12px;color:var(--coral);margin-top:6px;text-align:center;display:none"></p>
+      </div>
+      ${rs.length?`<div style="margin-top:1rem">
+        <p class="rsvp-count">${totalPpl} joining · ${no.length} can't make it</p>
+        <div class="rsvp-chips">
+          ${yes.map(r=>`<span class="rsvp-chip">${x(r.name)}${r.guests>1?' +'+(r.guests-1):''}</span>`).join('')}
+          ${no.map(r=>`<span class="rsvp-chip no">${x(r.name)}</span>`).join('')}
+        </div>
+      </div>`:''}
+    </div>
+    <div style="height:.5px;background:linear-gradient(90deg,transparent,var(--coral-m),transparent);margin:0 1rem"></div>
+    <div class="section">
+      <p class="sec-tag coral">Wish List</p>
+      <p class="sec-title">Gift Registry</p>
+      <p class="reg-note">Shirin wants you to know — gifts are completely optional.<br>Your presence is what matters most 💕</p>
+      <div class="reg-list">
+        ${bycat.map(({cat,items})=>!items.length?'':`
+          <div class="reg-cat-hd"><span>${CICONS[cat]||'✦'} ${x(cat)}</span></div>
+          ${items.map(item=>{
+            const full=isFull(item);
+            return`<div class="reg-item ${full?'full':''}">
+              <div class="reg-top">
+                <div class="reg-dot ${dotClass(item)}"></div>
+                <div style="flex:1;min-width:0">
+                  <div class="reg-item-name">${x(item.name)}</div>
+                  ${item.note?`<div class="reg-item-note">${x(item.note)}</div>`:''}
+                  <div class="reg-qty">${qtyLabel(item)}</div>
+                </div>
+                ${!full?`<button class="btn-teal" onclick="openClaim('${item.id}')">I'll bring one</button>`:''}
+              </div>
+              ${item.claims.length?`<div class="reg-claimers">${item.claims.map(c=>`<span class="claimer-tag">${x(c)}</span>`).join('')}</div>`:''}
+            </div>`;
+          }).join('')}`).join('')}
+      </div>
+    </div>
+  </div>
+  ${wave('#48BFB0',.28,false)}
+  <div class="footer-inner">
+    <p>Celebrating Baby Suree with all our love 🌊</p>
+    <span class="admin-lnk" onclick="openAdmin()">Manage event</span>
+  </div>`;
+
+  if(modal)renderModal();
+}
+
+function renderModal(){
+  const old=document.getElementById('ov');if(old)old.remove();
+  let body='';
+  if(modal==='claim'){
+    const it=data.registry.find(i=>i.id===claimId);
+    if(!it){modal=null;return;}
+    const isSpecial=it.category==='Something Special';
+    body=`<div class="overlay" id="ov"><div class="modal">
+      <div class="modal-head"><h3>I'll bring one!</h3><button class="m-close" onclick="closeModal()">✕</button></div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:12px">Bringing: <strong style="color:var(--brown)">${x(it.name)}</strong></p>
+      <label>Your name</label>
+      <input type="text" id="cn" placeholder="Enter your name" maxlength="50">
+      <p id="claim-err" style="font-size:12px;color:var(--coral);margin-top:4px;display:none"></p>
+      ${isSpecial?`<label>What are you gifting?</label>
+      <input type="text" id="cg" placeholder="e.g. Cashmere blanket, Gold necklace…" maxlength="80" onkeydown="if(event.key==='Enter')confirmClaim()">
+      <p style="font-size:11px;color:#C4A898;margin-top:4px;font-style:italic">Everyone can see this — let the others know what you're bringing 👀</p>`:''}
+      <div class="btns"><button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn-coral" style="width:auto;padding:10px 22px" onclick="confirmClaim()">Confirm 🎁</button></div>
+    </div></div>`;
+  } else if(modal==='pin'){
+    body=`<div class="overlay" id="ov"><div class="modal">
+      <div class="modal-head"><h3>Manage Event</h3><button class="m-close" onclick="closeModal()">✕</button></div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:10px">Enter your admin PIN</p>
+      <label>PIN</label>
+      <input type="password" id="pi" placeholder="••••" maxlength="8" onkeydown="if(event.key==='Enter')checkPin()">
+      <p style="font-size:11px;color:#C4A898;margin-top:5px">Default PIN: 1234</p>
+      <div class="btns"><button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn-coral" style="width:auto;padding:10px 22px" onclick="checkPin()">Enter</button></div>
+    </div></div>`;
+  } else if(modal==='admin'){
+    const tb=`<div class="tabs">${['event','registry','rsvps','settings'].map(t=>`<button class="t ${atab===t?'on':''}" onclick="setTab('${t}')">${t[0].toUpperCase()+t.slice(1)}</button>`).join('')}</div>`;
+    let inner='';
+    if(atab==='event'){
+      const e=data.event;
+      inner=`<label>Parents</label><input id="ep" value="${x(e.parents)}">
+      <label>Baby name</label><input id="eb" value="${x(e.baby)}">
+      <label>Date</label><input id="ed" value="${x(e.date)}">
+      <label>Time</label><input id="et" value="${x(e.time)}">
+      <label>Venue name</label><input id="el" value="${x(e.location)}">
+      <label>Address / details</label><input id="ea" value="${x(e.address)}">
+      <label>Outfit theme note</label><input id="edr" value="${x(e.dresscode)}">
+      <label>Message on page</label><textarea id="en">${x(e.note)}</textarea>
+      <div class="btns"><button class="btn-coral" style="width:auto;padding:10px 22px" onclick="saveEvent()">Save</button></div>`;
+    } else if(atab==='registry'){
+      inner=`<div class="mrow" style="margin-bottom:8px">
+        <input id="rn2" placeholder="Item name" style="flex:3">
+        <input id="rnt" placeholder="Note (optional)" style="flex:2">
+        <select id="rnc">${CATS.map(c=>`<option>${c}</option>`).join('')}</select>
+        <select id="rnq"><option value="0">Unlimited</option><option value="1">1 only</option><option value="2">Max 2</option><option value="3">Max 3</option><option value="4">Max 4</option><option value="5">Max 5</option></select>
+        <button class="btn-teal" onclick="addItem()" style="padding:8px 14px;flex:0 0 auto">Add</button>
+      </div>
+      <div style="max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:5px">
+        ${data.registry.map(i=>`<div class="arow">
+          <span style="flex:1"><strong>${x(i.name)}</strong>
+            <span style="font-size:11px;color:var(--muted);margin-left:5px">${x(i.category)}</span>
+            <span style="font-size:11px;color:var(--teal-d);margin-left:5px">${i.maxQty===0?'unlimited':'max '+i.maxQty}</span>
+            ${i.claims.length?`<span style="font-size:11px;color:var(--coral);margin-left:5px">${i.claims.length} claimed</span>`:''}
+          </span>
+          ${i.claims.length?`<button class="btn-ghost" style="font-size:11px;padding:3px 7px" onclick="clearClaims('${i.id}')">Clear</button>`:''}
+          <button class="btn-ghost" style="font-size:11px;padding:3px 7px;color:var(--coral)" onclick="delItem('${i.id}')">✕</button>
+        </div>`).join('')}
+      </div>`;
+    } else if(atab==='rsvps'){
+      const tot=data.rsvps.filter(r=>r.attending==='yes').reduce((s,r)=>s+(r.guests||1),0);
+      inner=`<div style="display:flex;gap:10px;margin-bottom:1rem">
+        <div style="flex:1;background:var(--teal-l);border-radius:10px;padding:12px;text-align:center"><div style="font-family:var(--ff-d);font-size:28px;font-weight:600;color:var(--teal-d)">${tot}</div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--teal-d);margin-top:2px">Attending</div></div>
+        <div style="flex:1;background:var(--coral-l);border-radius:10px;padding:12px;text-align:center"><div style="font-family:var(--ff-d);font-size:28px;font-weight:600;color:var(--coral)">${data.rsvps.filter(r=>r.attending==='no').length}</div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--coral);margin-top:2px">Can't make it</div></div>
+      </div>
+      <div style="max-height:260px;overflow-y:auto">
+        ${!data.rsvps.length?'<p style="text-align:center;font-size:13px;color:var(--muted);padding:1rem">No RSVPs yet</p>':data.rsvps.map(r=>`
+          <div class="arow" style="flex-wrap:wrap;gap:6px">
+            <span style="flex:1;min-width:100px">${x(r.name)}</span>
+            <span class="${r.attending==='yes'?'tag-y':'tag-n'}">${r.attending==='yes'?'Yes · '+r.guests:'No'}</span>
+            ${r.dietary?`<span style="font-size:11px;color:var(--muted);font-style:italic;width:100%">🥗 ${x(r.dietary)}</span>`:''}
+            <button class="btn-ghost" style="font-size:11px;padding:3px 7px;color:var(--coral)" onclick="delRsvp('${r.id}')">✕</button>
+          </div>`).join('')}
+      </div>`;
+    } else {
+      inner=`<label>Change PIN</label>
+        <input type="password" id="np" placeholder="New PIN (blank = keep current)">
+        <p style="font-size:11px;color:#C4A898;margin-top:4px">Current PIN kept for security</p>
+        <div class="btns" style="margin-top:12px">
+          <button class="btn-ghost" style="color:var(--coral);font-size:12px" onclick="data.rsvps=[];data.registry.forEach(i=>i.claims=[]);save();closeModal();">Clear all data</button>
+          <button class="btn-coral" style="width:auto;padding:10px 22px" onclick="saveSett()">Save</button>
+        </div>`;
+    }
+    body=`<div class="overlay" id="ov"><div class="modal">
+      <div class="modal-head"><h3>Manage Event</h3><button class="m-close" onclick="closeModal()">✕</button></div>
+      ${tb}${inner}
+    </div></div>`;
+  }
+  if(body){
+    document.body.insertAdjacentHTML('beforeend',body);
+    setTimeout(()=>{const f=document.querySelector('.overlay input');if(f)f.focus();},50);
+  }
+}
+
+function showRsvpErr(msg){const el=document.getElementById('rsvp-err');if(el){el.textContent=msg;el.style.display='block';}}
+function submitRsvp(){
+  const name=(document.getElementById('rn')?.value||'').trim();
+  const att=document.getElementById('ra')?.value;
+  const guests=parseInt(document.getElementById('rg')?.value)||1;
+  const dietary=(document.getElementById('rdiet')?.value||'').trim();
+  if(!name){showRsvpErr('Please enter your name');return;}
+  if(data.rsvps.find(r=>r.name.toLowerCase()===name.toLowerCase())){showRsvpErr(name+' has already RSVP\u2019d!');return;}
+  data.rsvps.push({id:Date.now().toString(36),name,attending:att,guests,dietary});
+  save();render();
+}
+function openClaim(id){claimId=id;modal='claim';renderModal();}
+function confirmClaim(){
+  const n=(document.getElementById('cn')?.value||'').trim();
+  if(!n){const el=document.getElementById('claim-err');if(el){el.textContent='Please enter your name';el.style.display='block';}return;}
+  const gift=(document.getElementById('cg')?.value||'').trim();
+  const it=data.registry.find(i=>i.id===claimId);
+  if(it){
+    if(!it.claims)it.claims=[];
+    it.claims.push(gift?`${n} · ${gift}`:n);
+    save();
+  }
+  closeModal();render();
+}
+function openAdmin(){modal='pin';renderModal();}
+function checkPin(){
+  const v=document.getElementById('pi')?.value;
+  if(v===data.pin){modal='admin';atab='event';const o=document.getElementById('ov');if(o)o.remove();renderModal();}
+  else alert('Incorrect PIN');
+}
+function setTab(t){atab=t;const o=document.getElementById('ov');if(o)o.remove();renderModal();}
+function saveEvent(){
+  data.event={
+    parents:document.getElementById('ep')?.value||data.event.parents,
+    baby:document.getElementById('eb')?.value||data.event.baby,
+    date:document.getElementById('ed')?.value||data.event.date,
+    time:document.getElementById('et')?.value||data.event.time,
+    location:document.getElementById('el')?.value||data.event.location,
+    address:document.getElementById('ea')?.value||data.event.address,
+    dresscode:document.getElementById('edr')?.value||'',
+    note:document.getElementById('en')?.value||''
+  };
+  save();closeModal();
+}
+function addItem(){
+  const n=(document.getElementById('rn2')?.value||'').trim();
+  if(!n){alert('Enter item name');return;}
+  const note=(document.getElementById('rnt')?.value||'').trim();
+  const cat=document.getElementById('rnc')?.value||CATS[0];
+  const maxQty=parseInt(document.getElementById('rnq')?.value)||0;
+  data.registry.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),category:cat,name:n,note,maxQty,claims:[]});
+  save();const o=document.getElementById('ov');if(o)o.remove();renderModal();
+}
+function delItem(id){data.registry=data.registry.filter(i=>i.id!==id);save();const o=document.getElementById('ov');if(o)o.remove();renderModal();}
+function clearClaims(id){const i=data.registry.find(v=>v.id===id);if(i)i.claims=[];save();const o=document.getElementById('ov');if(o)o.remove();renderModal();}
+function delRsvp(id){data.rsvps=data.rsvps.filter(r=>r.id!==id);save();const o=document.getElementById('ov');if(o)o.remove();renderModal();}
+function saveSett(){const p=document.getElementById('np')?.value?.trim();if(p)data.pin=p;save();closeModal();}
+function closeModal(){modal=null;claimId=null;const o=document.getElementById('ov');if(o)o.remove();}
+
+load();
+</script>
+</body>
+</html>
