@@ -454,16 +454,16 @@ function calLinks(){
   if(ampm==='PM'&&h!==12)h+=12;
   if(ampm==='AM'&&h===12)h=0;
   const timeStr=`${String(h).padStart(2,'0')}${String(m).padStart(2,'0')}00`;
-  let eh=h+3;if(eh>=24)eh=23;
+  let eh=h+4;if(eh>=24)eh=23;
   const endStr=`${String(eh).padStart(2,'0')}${String(m).padStart(2,'0')}00`;
   const title=encodeURIComponent(`Baby Shower \u2014 ${data.event.baby}`);
   const loc=encodeURIComponent(`${data.event.location}${data.event.address?', '+data.event.address:''}`);
-  const desc=encodeURIComponent(`Celebrating ${data.event.baby} with ${data.event.parents} \ud83c\udf0a`);
+  const desc=encodeURIComponent(`Celebrating ${data.event.baby} with ${data.event.parents} \ud83c\udf0a\n\nGift registry & RSVP: https://baby-suree.vercel.app/`);
   const google=`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dateStr}T${timeStr}/${dateStr}T${endStr}&details=${desc}&location=${loc}`;
   const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Baby Suree//EN','BEGIN:VEVENT',
     `DTSTART:${dateStr}T${timeStr}`,`DTEND:${dateStr}T${endStr}`,
     `SUMMARY:Baby Shower \u2014 ${data.event.baby}`,
-    `DESCRIPTION:Celebrating ${data.event.baby} with ${data.event.parents}`,
+    `DESCRIPTION:Celebrating ${data.event.baby} with ${data.event.parents}\\nGift registry & RSVP: https://baby-suree.vercel.app/`,
     `LOCATION:${data.event.location}${data.event.address?', '+data.event.address:''}`,
     'END:VEVENT','END:VCALENDAR'].join('\r\n');
   return{google,ics};
