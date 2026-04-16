@@ -123,21 +123,18 @@ let modal=null,claimId=null,atab='event';
 
 async function load(){
   try{
-    if(window.storage){
-      const r=await window.storage.get(KEY,true);
-      if(r&&r.value){const d=JSON.parse(r.value);data={...data,...d};}
-    } else {
-      const s=localStorage.getItem(KEY);
-      if(s){const d=JSON.parse(s);data={...data,...d};}
-    }
+    const r=await fetch('/api/data');
+    if(r.ok){const d=await r.json();if(d)data={...data,...d};render();return;}
   }catch(e){}
+  try{const s=localStorage.getItem(KEY);if(s){const d=JSON.parse(s);data={...data,...d};}}catch(e){}
   render();
 }
 async function save(){
   try{
-    if(window.storage){await window.storage.set(KEY,JSON.stringify(data),true);}
-    else{localStorage.setItem(KEY,JSON.stringify(data));}
+    const r=await fetch('/api/data',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    if(r.ok)return;
   }catch(e){}
+  try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}
 }
 
 const x=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
