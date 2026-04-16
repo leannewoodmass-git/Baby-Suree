@@ -397,8 +397,11 @@ function submitRsvp(){
   const dietary=(document.getElementById('rdiet')?.value||'').trim();
   if(!name){showRsvpErr('Please enter your name');return;}
   if(data.rsvps.find(r=>r.name.toLowerCase()===name.toLowerCase())){showRsvpErr(name+' has already RSVP\u2019d!');return;}
-  data.rsvps.push({id:Date.now().toString(36),name,attending:att,guests,dietary});
-  save();render();
+  const newRsvp={id:Date.now().toString(36),name,attending:att,guests,dietary};
+  data.rsvps.push(newRsvp);
+  // PUT atomically appends on the server — safe from concurrent overwrites
+  fetch('/api/data',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(newRsvp)}).catch(()=>{});
+  render();
 }
 function openClaim(id){claimId=id;modal='claim';renderModal();}
 function confirmClaim(){
@@ -444,7 +447,7 @@ function addItem(){
 }
 function delItem(id){data.registry=data.registry.filter(i=>i.id!==id);save();const o=document.getElementById('ov');if(o)o.remove();renderModal();}
 function clearClaims(id){const i=data.registry.find(v=>v.id===id);if(i)i.claims=[];save();const o=document.getElementById('ov');if(o)o.remove();renderModal();}
-function delRsvp(id){data.rsvps=data.rsvps.filter(r=>r.id!==id);save();const o=document.getElementById('ov');if(o)o.remove();renderModal();}
+function delRsvp(id){data.rsvps=data.rsvps.filter(r=>r.id!==id);fetch('/api/data?id='+id,{method:'DELETE'}).catch(()=>{});const o=document.getElementById('ov');if(o)o.remove();renderModal();}
 function saveSett(){const p=document.getElementById('np')?.value?.trim();if(p)data.pin=p;save();closeModal();}
 function closeModal(){modal=null;claimId=null;const o=document.getElementById('ov');if(o)o.remove();}
 
