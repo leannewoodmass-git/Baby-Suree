@@ -115,7 +115,8 @@ const DEFAULTS={
     {id:'r12',category:'Sleep Essentials',name:'Self-Rocking Baby Bed',note:'Sand, sage, blush or ocean blue',maxQty:1,claims:[]},
     {id:'r13',category:'Something Special',name:'Trust Me - she MUST have THIS',note:'',maxQty:0,claims:[]}
   ],
-  pin:'1234'
+  pin:'1234',
+  guests:['Abbie','Alessandra','Ana Banana','Anastasia','Angelique','Annabelle','Butzi','Cake','Charly','Carlot','Caroline','Dani on a Mission','Diana','Mary Doble','Farhannah','Fanta','Felica','Felicity','Justine','Louisa Jensen','Janet Kirwin','Karina','Kwanny','Julie Lykke','Leanne','Lisa','March','Marta','May','Meena','Meg','Nikol','Phern','Poonim','Samma','Sasinant Tukta','Shanie','Shannon','Shruthi','Sonya','Vanessa']
 };
 
 let data=JSON.parse(JSON.stringify(DEFAULTS));
@@ -280,7 +281,7 @@ function renderModal(){
       <div class="btns"><button class="btn-ghost" onclick="closeModal()">Cancel</button><button class="btn-coral" style="width:auto;padding:10px 22px" onclick="checkPin()">Enter</button></div>
     </div></div>`;
   } else if(modal==='admin'){
-    const tb=`<div class="tabs">${['event','registry','rsvps','settings'].map(t=>`<button class="t ${atab===t?'on':''}" onclick="setTab('${t}')">${t[0].toUpperCase()+t.slice(1)}</button>`).join('')}</div>`;
+    const tb=`<div class="tabs">${['event','registry','rsvps','guests','settings'].map(t=>`<button class="t ${atab===t?'on':''}" onclick="setTab('${t}')">${t[0].toUpperCase()+t.slice(1)}</button>`).join('')}</div>`;
     let inner='';
     if(atab==='event'){
       const e=data.event;
@@ -327,6 +328,47 @@ function renderModal(){
             <button class="btn-ghost" style="font-size:11px;padding:3px 7px;color:var(--coral)" onclick="delRsvp('${r.id}')">✕</button>
           </div>`).join('')}
       </div>`;
+    } else if(atab==='guests'){
+      const norm=s=>s.toLowerCase().replace(/[^a-z\s]/g,'').trim();
+      const matchRsvp=g=>{
+        const gn=norm(g);
+        const words=gn.split(/\s+/).filter(w=>w.length>2);
+        return data.rsvps.find(r=>{const rn=norm(r.name);return rn===gn||words.some(w=>rn.includes(w))||gn.includes(rn);});
+      };
+      const rows=data.guests.map(g=>({g,rsvp:matchRsvp(g)}));
+      const pending=rows.filter(r=>!r.rsvp);
+      const yes=rows.filter(r=>r.rsvp&&r.rsvp.attending==='yes');
+      const no=rows.filter(r=>r.rsvp&&r.rsvp.attending==='no');
+      const totalPpl=yes.reduce((s,r)=>s+(r.rsvp.guests||1),0);
+      const sorted=[...pending,...yes,...no];
+      inner=`
+        <div style="display:flex;gap:8px;margin-bottom:1rem">
+          <div style="flex:1;background:var(--sand);border:0.5px solid var(--bc);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-family:var(--ff-d);font-size:22px;font-weight:600;color:var(--muted)">${pending.length}</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:2px">No reply</div>
+          </div>
+          <div style="flex:1;background:var(--teal-l);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-family:var(--ff-d);font-size:22px;font-weight:600;color:var(--teal-d)">${totalPpl}</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--teal-d);margin-top:2px">Attending</div>
+          </div>
+          <div style="flex:1;background:var(--coral-l);border-radius:10px;padding:10px;text-align:center">
+            <div style="font-family:var(--ff-d);font-size:22px;font-weight:600;color:var(--coral)">${no.length}</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--coral);margin-top:2px">Can't make it</div>
+          </div>
+        </div>
+        <div style="max-height:310px;overflow-y:auto;display:flex;flex-direction:column;gap:4px">
+          ${sorted.map(({g,rsvp})=>{
+            const s=!rsvp?'pending':rsvp.attending==='yes'?'yes':'no';
+            const bg=s==='yes'?'var(--teal-l)':s==='no'?'var(--coral-l)':'#fff';
+            const border=s==='yes'?'var(--bt)':'var(--bc)';
+            const colour=s==='yes'?'var(--teal-d)':s==='no'?'var(--coral)':'#C4A898';
+            const label=s==='pending'?'Waiting…':s==='no'?'Can\'t make it':`Yes · ${rsvp.guests||1}${rsvp.dietary?' · 🥗 '+rsvp.dietary:''}`;
+            return`<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:${bg};border:0.5px solid ${border};border-radius:8px">
+              <span style="flex:1;font-family:var(--ff-d);font-size:14px;font-weight:600;color:var(--brown)">${x(g)}</span>
+              <span style="font-size:11px;color:${colour};white-space:nowrap">${label}</span>
+            </div>`;
+          }).join('')}
+        </div>`;
     } else {
       inner=`<label>Change PIN</label>
         <input type="password" id="np" placeholder="New PIN (blank = keep current)">
