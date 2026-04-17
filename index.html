@@ -243,6 +243,7 @@ function render(){
                 <div style="flex:1;min-width:0">
                   <div class="reg-item-name">${x(item.name)}</div>
                   ${item.note?`<div class="reg-item-note">${x(item.note)}</div>`:''}
+                  ${item.link?`<a href="${item.link}" target="_blank" rel="noopener" style="font-size:11px;color:var(--teal-d);text-decoration:none;font-weight:400">View product ↗</a>`:''}
                   <div class="reg-qty">${qtyLabel(item)}</div>
                 </div>
                 ${!full?`<button class="btn-teal" onclick="openClaim('${item.id}')">I'll bring one</button>`:''}
