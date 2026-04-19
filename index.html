@@ -241,7 +241,10 @@ function render(){
               <div class="reg-top">
                 <div class="reg-dot ${dotClass(item)}"></div>
                 <div style="flex:1;min-width:0">
-                  <div class="reg-item-name">${x(item.name)}</div>
+                  <div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">
+                    <div class="reg-item-name">${x(item.name)}</div>
+                    ${item.price?`<span style="font-size:12px;font-weight:600;color:var(--teal-d);font-family:var(--ff-b)">${x(item.price)}</span>`:''}
+                  </div>
                   ${item.note?`<div class="reg-item-note">${x(item.note)}</div>`:''}
                   ${item.link?`<a href="${item.link}" target="_blank" rel="noopener" style="font-size:11px;color:var(--teal-d);text-decoration:none;font-weight:400">View product ↗</a>`:''}
                   <div class="reg-qty">${qtyLabel(item)}</div>
