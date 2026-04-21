@@ -191,10 +191,14 @@ function render(){
       <p class="sec-tag coral">The Details</p>
       <div class="detail-grid">
         <div class="dcard"><div class="dcard-icon">🌊</div><div class="dcard-lbl">Date & Time</div><div class="dcard-val">${x(e.date)}</div><div class="dcard-sub">${x(e.time)}</div></div>
-        <div class="dcard"><div class="dcard-icon">🐠</div><div class="dcard-lbl">Location</div><div class="dcard-val">${x(e.location)}</div><div class="dcard-sub">${x(e.address)}</div></div>
+        <div class="dcard"><div class="dcard-icon">🐠</div><div class="dcard-lbl">Location</div><div class="dcard-val">${x(e.location)}</div><div class="dcard-sub">${x(e.address)}</div>${e.locationLink?`<a href="${e.locationLink}" target="_blank" rel="noopener" style="font-size:11px;color:var(--teal-d);text-decoration:none;font-weight:400;margin-top:4px;display:inline-block">📍 Get directions ↗</a>`:''}</div>
         <div class="dcard"><div class="dcard-icon">👗</div><div class="dcard-lbl">Outfit Theme</div><div class="dcard-val" style="font-size:13px">${x(e.dresscode)}</div></div>
       </div>
       ${e.note?`<div class="note-wave"><p>${x(e.note)}</p></div>`:''}
+      ${e.venueNote?`<div style="background:#fff;border:0.5px solid var(--bt);border-radius:14px;padding:1.1rem 1.4rem;margin-top:.75rem">
+        <p style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-d);margin-bottom:.5rem">📍 Venue Info</p>
+        <p style="font-size:14px;color:var(--brown);line-height:1.7;font-weight:300">${x(e.venueNote)}</p>
+      </div>`:''}
     </div>
     <div style="height:.5px;background:linear-gradient(90deg,transparent,var(--teal-m),transparent);margin:0 1rem"></div>
     <div class="section">
@@ -305,6 +309,8 @@ function renderModal(){
       <label>Time</label><input id="et" value="${x(e.time)}">
       <label>Venue name</label><input id="el" value="${x(e.location)}">
       <label>Address / details</label><input id="ea" value="${x(e.address)}">
+      <label>Google Maps link</label><input id="ell" value="${x(e.locationLink||'')}">
+      <label>Venue info blurb</label><textarea id="evn">${x(e.venueNote||'')}</textarea>
       <label>Outfit theme note</label><input id="edr" value="${x(e.dresscode)}">
       <label>Message on page</label><textarea id="en">${x(e.note)}</textarea>
       <div class="btns"><button class="btn-coral" style="width:auto;padding:10px 22px" onclick="saveEvent()">Save</button></div>`;
@@ -447,7 +453,9 @@ function saveEvent(){
     location:document.getElementById('el')?.value||data.event.location,
     address:document.getElementById('ea')?.value||data.event.address,
     dresscode:document.getElementById('edr')?.value||'',
-    note:document.getElementById('en')?.value||''
+    note:document.getElementById('en')?.value||'',
+    locationLink:document.getElementById('ell')?.value||'',
+    venueNote:document.getElementById('evn')?.value||''
   };
   save();closeModal();
 }
